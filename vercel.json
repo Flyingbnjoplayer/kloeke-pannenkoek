@@ -1,0 +1,77 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "installCommand": "pnpm install --frozen-lockfile",
+        "buildCommand": "pnpm build",
+        "outputDirectory": ".next"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Access-Control-Allow-Origin": "*"
+      }
+    },
+    {
+      "src": "/_next/static/(.*)",
+      "dest": "/_next/static/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_APP_ENV": "@app_env",
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "NEXT_PUBLIC_SENTRY_DSN": "@sentry_dsn",
+    "NEXT_PUBLIC_GA_MEASUREMENT_ID": "@ga_measurement_id",
+    "NEXT_PUBLIC_POSTHOG_KEY": "@posthog_key",
+    "NEXT_PUBLIC_POSTHOG_HOST": "@posthog_host"
+  },
+  "regions": ["iad1"],
+  "functions": {
+    "api/**/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    },
+    "nodejs-compatibility": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_SUPABASE_URL": "https://your-project.supabase.co",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "your-anon-key",
+      "NEXT_PUBLIC_SENTRY_DSN": "your-sentry-dsn"
+    }
+  }
+}
