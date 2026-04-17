@@ -1,0 +1,692 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://venice.ai/schemas/shared-context/v1.0.0",
+  "title": "Multi-Agent Shared Context Schema",
+  "description": "Schema for shared context between Agent 3 (Integration Explainer), Agent 1 (SkillMarkdown Architect), and Agent 2 (VSCode Generator)",
+  "type": "object",
+  
+  "definitions": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "RFC 4122 UUID v4"
+    },
+    "iso_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp with milliseconds"
+    },
+    "agent_id": {
+      "type": "string",
+      "enum": ["agent1", "agent2", "agent3", "system"],
+      "description": "Identifier for participating agents"
+    }
+  },
+  
+  "properties": {
+    "context_id": {
+      "$ref": "#/definitions/uuid",
+      "description": "Unique identifier for this shared context instance"
+    },
+    "created_at": {
+      "$ref": "#/definitions/iso_timestamp",
+      "description": "When this context was created"
+    },
+    "updated_at": {
+      "$ref": "#/definitions/iso_timestamp",
+      "description": "Last time this context was updated"
+    },
+    "created_by": {
+      "$ref": "#/definitions/agent_id",
+      "description": "Agent that created this context"
+    },
+    "last_modified_by": {
+      "$ref": "#/definitions/agent_id",
+      "description": "Agent that last modified this context"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for schema compatibility"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the schema"
+    },
+    
+    "task": {
+      "type": "object",
+      "description": "Main task being coordinated between agents",
+      "properties": {
+        "task_id": {
+          "$ref": "#/definitions/uuid",
+          "description": "Unique task identifier"
+        },
+        "task_type": {
+          "type": "string",
+          "enum": ["integration_explanation", "skill_generation", "code_generation", "security_review", "performance_optimization", "troubleshooting", "documentation", "validation", "deployment"],
+          "description": "Type of task"
+        },
+        "title": {
+          "type": "string",
+          "description": "Human-readable task title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed task description"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"],
+          "description": "Task priority"
+        },
+        "deadline": {
+          "$ref": "#/definitions/iso_timestamp",
+          "description": "When the task must be completed"
+        },
+        "estimated_complexity": {
+          "type": "string",
+          "enum": ["trivial", "simple", "medium", "complex", "very_complex"],
+          "description": "Initial complexity estimate"
+        },
+        "actual_complexity": {
+          "type": ["string", "null"],
+          "enum": ["trivial", "simple", "medium", "complex", "very_complex", null],
+          "description": "Actual complexity after completion"
+        },
+        "time_estimate_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Estimated time to complete in minutes"
+        },
+        "time_spent_minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Time already spent on task"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for categorizing tasks"
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specific requirements for this task"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Constraints that must be respected"
+        }
+      },
+      "required": ["task_id", "task_type", "title", "priority"]
+    },
+    
+    "agents_involved": {
+      "type": "array",
+      "description": "Agents participating in this context",
+      "items": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "$ref": "#/definitions/agent_id",
+            "description": "Agent identifier"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["explainer", "skill_architect", "code_generator", "validator", "security_reviewer", "performance_optimizer"],
+            "description": "Role of this agent in the task"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["idle", "active", "blocked", "completed", "failed"],
+            "description": "Current status of this agent"
+          },
+          "assigned_at": {
+            "$ref": "#/definitions/iso_timestamp",
+            "description": "When agent was assigned to task"
+          },
+          "last_active": {
+            "$ref": "#/definitions/iso_timestamp",
+            "description": "When agent last performed an action"
+          },
+          "contribution": {
+            "type": "string",
+            "description": "Summary of agent's contribution"
+          },
+          "assigned_subtasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/uuid"
+            },
+            "description": "Subtasks assigned to this agent"
+          }
+        },
+        "required": ["agent_id", "role", "status"]
+      }
+    },
+    
+    "artifacts": {
+      "type": "array",
+      "description": "Artifacts generated during task execution",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artifact_id": {
+            "$ref": "#/definitions/uuid",
+            "description": "Unique artifact identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["explanation_markdown", "skill_template", "code_file", "configuration", "diagram", "documentation", "test_suite", "deployment_script", "security_report", "performance_report", "troubleshooting_guide", "api_specification"],
+            "description": "Type of artifact"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable artifact name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Artifact description"
+          },
+          "location": {
+            "type": "string",
+            "description": "File system location or URI"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Artifact size in bytes"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["markdown", "typescript", "javascript", "json", "yaml", "mermaid", "svg", "png"],
+            "description": "Artifact format"
+          },
+          "created_by": {
+            "$ref": "#/definitions/agent_id",
+            "description": "Agent that created this artifact"
+          },
+          "created_at": {
+            "$ref": "#/definitions/iso_timestamp",
+            "description": "When artifact was created"
+          },
+          "updated_at": {
+            "$ref": "#/definitions/iso_timestamp",
+            "description": "When artifact was last updated"
+          },
+          "checksum": {
+            "type": "string",
+            "description": "SHA-256 checksum for integrity verification"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/uuid"
+            },
+            "description": "Other artifacts this depends on"
+          },
+          "consumed_by": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/agent_id"
+            },
+            "description": "Agents that use this artifact"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed", "validated", "deployed", "failed"],
+            "description": "Current status of artifact"
+          },
+          "validation": {
+            "type": "object",
+            "properties": {
+              "is_valid": {
+                "type": "boolean",
+                "description": "Whether artifact passed validation"
+              },
+              "validated_by": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/agent_id"
+                },
+                "description": "Agents that validated this artifact"
+              },
+              "validated_at": {
+                "$ref": "#/definitions/iso_timestamp",
+                "description": "When validation occurred"
+              },
+              "validation_notes": {
+                "type": "string",
+                "description": "Notes from validation process"
+              }
+            }
+          }
+        },
+        "required": ["artifact_id", "type", "name", "created_by", "created_at", "status"]
+      }
+    },
+    
+    "dependencies": {
+      "type": "object",
+      "description": "Task dependencies and relationships",
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          },
+          "description": "Tasks that this task blocks"
+        },
+        "blocked_by": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          },
+          "description": "Tasks that must complete before this one"
+        },
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          },
+          "description": "Tasks this task depends on"
+        },
+        "required_for": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          },
+          "description": "Tasks that require this task"
+        },
+        "related_tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uuid"
+          },
+          "description": "Tasks related to this one"
+        }
+      }
+    },
+    
+    "progress": {
+      "type": "object",
+      "description": "Progress tracking for the overall task",
+      "properties": {
+        "overall_percent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall completion percentage"
+        },
+        "current_step": {
+          "type": "string",
+          "description": "Current step being worked on"
+        },
+        "total_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total number of steps"
+        },
+        "completed_steps": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of completed steps"
+        },
+        "next_step": {
+          "type": "string",
+          "description": "Next step to be executed"
+        },
+        "estimated_completion": {
+          "$ref": "#/definitions/iso_timestamp",
+          "description": "Estimated completion time"
+        },
+        "bottlenecks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Current bottlenecks blocking progress"
+        }
+      },
+      "required": ["overall_percent", "current_step", "total_steps", "completed_steps"]
+    },
+    
+    "state": {
+      "type": "object",
+      "description": "Current state of the task execution",
+      "properties": {
+        "current_input": {
+          "type": "object",
+          "properties": {
+            "problem": {
+              "type": "string",
+              "description": "Problem statement"
+            },
+            "requirements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Specific requirements"
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Constraints to respect"
+            }
+          }
+        },
+        "current_output": {
+          "type": "object",
+          "properties": {
+            "solution_outline": {
+              "type": "string",
+              "description": "Outline of proposed solution"
+            },
+            "alternatives_considered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Alternative solutions considered"
+            },
+            "selected_approach": {
+              "type": "string",
+              "description": "Selected approach"
+            }
+          }
+        },
+        "intermediate_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step_id": {
+                "$ref": "#/definitions/uuid"
+              },
+              "step_name": {
+                "type": "string"
+              },
+              "performed_by": {
+                "$ref": "#/definitions/agent_id"
+              },
+              "performed_at": {
+                "$ref": "#/definitions/iso_timestamp"
+              },
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": ["step_id", "step_name", "performed_by", "performed_at", "result"]
+          }
+        },
+        "decision_log": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "decision_id": {
+                "$ref": "#/definitions/uuid"
+              },
+              "made_by": {
+                "$ref": "#/definitions/agent_id"
+              },
+              "made_at": {
+                "$ref": "#/definitions/iso_timestamp"
+              },
+              "description": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "alternatives_considered": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "impact": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"]
+              },
+              "reversible": {
+                "type": "boolean"
+              }
+            },
+            "required": ["decision_id", "made_by", "made_at", "description", "rationale"]
+          }
+        }
+      }
+    },
+    
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "error_id": {
+            "$ref": "#/definitions/uuid"
+          },
+          "error_code": {
+            "type": "string"
+          },
+          "error_message": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"]
+          },
+          "occurred_at": {
+            "$ref": "#/definitions/iso_timestamp"
+          },
+          "detected_by": {
+            "$ref": "#/definitions/agent_id"
+          },
+          "root_cause": {
+            "type": "string"
+          },
+          "recovery_steps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": ["new", "investigating", "fixing", "resolved", "ignored"]
+          }
+        },
+        "required": ["error_id", "error_code", "error_message", "severity", "occurred_at"]
+      }
+    },
+    
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "warning_id": {
+            "$ref": "#/definitions/uuid"
+          },
+          "warning_code": {
+            "type": "string"
+          },
+          "warning_message": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["high", "medium", "low"]
+          },
+          "occurred_at": {
+            "$ref": "#/definitions/iso_timestamp"
+          },
+          "raised_by": {
+            "$ref": "#/definitions/agent_id"
+          },
+          "acknowledged": {
+            "type": "boolean"
+          }
+        },
+        "required": ["warning_id", "warning_code", "warning_message", "severity", "occurred_at"]
+      }
+    },
+    
+    "validation": {
+      "type": "object",
+      "properties": {
+        "validated_by": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/agent_id"
+          }
+        },
+        "validation_checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "check_id": {
+                "$ref": "#/definitions/uuid"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["security_review", "performance_review", "code_quality", "documentation_completeness", "integration_testing", "user_acceptance", "compliance_check"]
+              },
+              "description": {
+                "type": "string"
+              },
+              "performed_by": {
+                "$ref": "#/definitions/agent_id"
+              },
+              "performed_at": {
+                "$ref": "#/definitions/iso_timestamp"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending", "in_progress", "passed", "failed", "skipped"]
+              },
+              "required": {
+                "type": "boolean"
+              }
+            },
+            "required": ["check_id", "type", "description", "status", "required"]
+          }
+        },
+        "approvals_required": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/agent_id"
+          }
+        },
+        "approvals_received": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agent_id": {
+                "$ref": "#/definitions/agent_id"
+              },
+              "approved_at": {
+                "$ref": "#/definitions/iso_timestamp"
+              }
+            }
+          }
+        },
+        "validation_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string"
+        },
+        "session_id": {
+          "$ref": "#/definitions/uuid"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string",
+          "enum": ["development", "staging", "production"]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "type": "string",
+          "enum": ["web3_integration", "api_integration", "security", "performance", "documentation", "code_generation", "skill_development", "troubleshooting"]
+        }
+      }
+    },
+    
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "change_id": {
+            "$ref": "#/definitions/uuid"
+          },
+          "timestamp": {
+            "$ref": "#/definitions/iso_timestamp"
+          },
+          "changed_by": {
+            "$ref": "#/definitions/agent_id"
+          },
+          "field_changed": {
+            "type": "string"
+          },
+          "old_value": {
+            "type": ["string", "number", "boolean", "object", "array", "null"]
+          },
+          "new_value": {
+            "type": ["string", "number", "boolean", "object", "array", "null"]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": ["change_id", "timestamp", "changed_by", "field_changed"]
+      }
+    }
+  },
+  
+  "required": [
+    "context_id",
+    "created_at",
+    "updated_at",
+    "created_by",
+    "version",
+    "schema_version",
+    "task",
+    "agents_involved",
+    "artifacts",
+    "progress",
+    "state",
+    "metadata"
+  ]
+}
