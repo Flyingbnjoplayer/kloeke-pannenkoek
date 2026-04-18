@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-04-12",
+  "tools": {
+    "api_testing_suite": {
+      "name": "API Testing Suite",
+      "description": "Comprehensive API endpoint testing and validation",
+      "capabilities": [
+        "Test REST API endpoints with various HTTP methods",
+        "Validate JSON responses against schemas",
+        "Test GraphQL queries and mutations",
+        "WebSocket connection testing",
+        "Webhook endpoint validation"
+      ]
+    },
+    "code_validator": {
+      "name": "Code Validator",
+      "description": "Static analysis and validation of code snippets",
+      "capabilities": [
+        "TypeScript type checking",
+        "ESLint rule validation",
+        "Security vulnerability scanning",
+        "Performance anti-pattern detection"
+      ]
+    },
+    "security_scanner": {
+      "name": "Security Scanner",
+      "description": "Comprehensive security analysis of code and configurations",
+      "capabilities": [
+        "API key exposure detection",
+        "Hardcoded secret identification",
+        "Environment variable security checking"
+      ]
+    }
+  }
+}

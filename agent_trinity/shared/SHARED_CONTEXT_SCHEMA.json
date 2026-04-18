@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://venice.ai/schemas/shared-context/v1.0.0",
+  "title": "Multi-Agent Shared Context Schema",
+  "description": "Schema for shared context between Agent 3 (Integration Explainer), Agent 1 (SkillMarkdown Architect), and Agent 2 (VSCode Generator)",
+  "type": "object",
+  "properties": {
+    "context_id": {
+      "type": "string",
+      "description": "Unique identifier for this shared context instance"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this context was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time this context was updated"
+    },
+    "task": {
+      "type": "object",
+      "description": "Main task being coordinated between agents",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "description": "Unique task identifier"
+        },
+        "task_type": {
+          "type": "string",
+          "description": "Type of task"
+        },
+        "title": {
+          "type": "string",
+          "description": "Human-readable task title"
+        }
+      }
+    }
+  }
+}

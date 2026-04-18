@@ -6,6 +6,8 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "test": "turbo test",
-    "agent3:dev": "cd packages/integration-explainer && npm run dev"
+    "agent3:dev": "cd packages/integration-explainer && npm run dev",
+    "agent3:test": "cd packages/integration-explainer && npm run test",
+    "agent3:explain": "cd packages/integration-explainer && npm run explain"
   }
 }

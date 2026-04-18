@@ -1,0 +1,13 @@
+{
+  "name": "@agent-trinity/integration-explainer",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "test": "node src/test.js",
+    "explain": "node src/index.js"
+  },
+  "dependencies": {
+    "zod": "^1^.22.0"
+  }
+}
