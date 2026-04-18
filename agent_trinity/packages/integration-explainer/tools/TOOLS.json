@@ -1,0 +1,504 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-04-12",
+  "tools": {
+    "api_testing_suite": {
+      "name": "API Testing Suite",
+      "description": "Comprehensive API endpoint testing and validation",
+      "capabilities": [
+        "Test REST API endpoints with various HTTP methods",
+        "Validate JSON responses against schemas",
+        "Test GraphQL queries and mutations",
+        "WebSocket connection testing",
+        "Webhook endpoint validation",
+        "Rate limit testing and analysis",
+        "Response time benchmarking",
+        "Error response validation"
+      ],
+      "configurations": {
+        "timeout_ms": 30000,
+        "retry_attempts": 3,
+        "concurrent_requests": 5,
+        "validation_strictness": "strict"
+      },
+      "supported_protocols": ["HTTP/1.1", "HTTP/2", "HTTP/3", "WebSocket", "GraphQL"],
+      "security_features": [
+        "API key rotation testing",
+        "Authentication flow validation",
+        "CORS policy testing",
+        "SSL/TLS certificate validation",
+        "Header injection testing"
+      ]
+    },
+    "code_validator": {
+      "name": "Code Validator",
+      "description": "Static analysis and validation of code snippets",
+      "capabilities": [
+        "TypeScript type checking",
+        "ESLint rule validation",
+        "Security vulnerability scanning",
+        "Performance anti-pattern detection",
+        "Best practices compliance checking",
+        "API usage pattern validation",
+        "Dependency version compatibility checking",
+        "Environment variable usage validation"
+      ],
+      "languages_supported": [
+        "TypeScript",
+        "JavaScript",
+        "JSX",
+        "TSX",
+        "JSON",
+        "YAML",
+        "Markdown",
+        "Dockerfile",
+        "Shell"
+      ],
+      "validation_rules": {
+        "typescript": {
+          "strict": true,
+          "noImplicitAny": true,
+          "strictNullChecks": true,
+          "strictFunctionTypes": true
+        },
+        "eslint": {
+          "extends": [
+            "next/core-web-vitals",
+            "plugin:@typescript-eslint/recommended",
+            "plugin:security/recommended"
+          ]
+        }
+      }
+    },
+    "security_scanner": {
+      "name": "Security Scanner",
+      "description": "Comprehensive security analysis of code and configurations",
+      "capabilities": [
+        "API key exposure detection",
+        "Hardcoded secret identification",
+        "Environment variable security checking",
+        "CORS misconfiguration detection",
+        "Authentication vulnerability scanning",
+        "Authorization flaw detection",
+        "Encryption usage validation",
+        "Input sanitization checking"
+      ],
+      "scan_types": {
+        "static_analysis": "Code pattern detection",
+        "dependency_check": "Vulnerable package detection",
+        "configuration_audit": "Security misconfigurations",
+        "api_endpoint_scan": "Insecure endpoint detection"
+      },
+      "security_standards": ["OWASP Top 10", "CWE Top 25", "SANS Top 25"],
+      "report_format": {
+        "severity_levels": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+        "remediation_steps": true,
+        "code_snippets": true,
+        "reference_links": true
+      }
+    },
+    "architecture_diagram_generator": {
+      "name": "Architecture Diagram Generator",
+      "description": "Generate system architecture diagrams using Mermaid.js",
+      "capabilities": [
+        "Generate flowcharts for system components",
+        "Create sequence diagrams for API calls",
+        "Generate class diagrams for code structure",
+        "Create deployment diagrams for infrastructure",
+        "Generate ER diagrams for database schemas",
+        "Create state diagrams for application flow",
+        "Generate Gantt charts for project timelines",
+        "Create user journey maps"
+      ],
+      "diagram_types": [
+        "flowchart",
+        "sequenceDiagram",
+        "classDiagram",
+        "stateDiagram",
+        "erDiagram",
+        "gantt",
+        "journey",
+        "quadrantChart"
+      ],
+      "output_formats": ["mermaid", "svg", "png", "pdf", "markdown"],
+      "themes": ["default", "dark", "forest", "neutral"]
+    },
+    "integration_pattern_library": {
+      "name": "Integration Pattern Library",
+      "description": "Library of common integration patterns and their implementations",
+      "patterns": {
+        "authentication": [
+          "JWT with refresh tokens",
+          "OAuth2 authorization code flow",
+          "OAuth2 client credentials",
+          "API key rotation",
+          "Web3 wallet authentication",
+          "Session-based authentication",
+          "Multi-factor authentication"
+        ],
+        "api_communication": [
+          "REST with HATEOAS",
+          "GraphQL with Apollo",
+          "WebSocket real-time updates",
+          "Server-sent events (SSE)",
+          "Webhook implementation",
+          "Message queue patterns",
+          "Event-driven architecture"
+        ],
+        "data_persistence": [
+          "Redis caching strategies",
+          "Database connection pooling",
+          "Optimistic updates",
+          "Pessimistic locking",
+          "Event sourcing",
+          "CQRS pattern",
+          "Change data capture"
+        ],
+        "error_handling": [
+          "Retry with exponential backoff",
+          "Circuit breaker pattern",
+          "Dead letter queues",
+          "Graceful degradation",
+          "Fallback mechanisms",
+          "Saga pattern for distributed transactions"
+        ],
+        "security": [
+          "API key encryption at rest",
+          "TLS termination and mTLS",
+          "Input validation and sanitization",
+          "Output encoding",
+          "Security headers implementation",
+          "Rate limiting strategies"
+        ]
+      },
+      "implementation_templates": {
+        "language": ["TypeScript", "JavaScript", "Python", "Go", "Java"],
+        "framework": ["Next.js", "Express", "FastAPI", "Spring Boot", "Gin"],
+        "cloud": ["Vercel", "AWS", "Google Cloud", "Azure", "DigitalOcean"]
+      }
+    },
+    "performance_analyzer": {
+      "name": "Performance Analyzer",
+      "description": "Analyze and optimize performance of integrations",
+      "capabilities": [
+        "Latency measurement between services",
+        "Throughput analysis",
+        "Memory usage profiling",
+        "CPU utilization monitoring",
+        "Database query optimization",
+        "Cache hit ratio analysis",
+        "Bundle size analysis for frontend",
+        "Lighthouse performance scoring"
+      ],
+      "metrics_collected": [
+        "response_time_p95",
+        "requests_per_second",
+        "error_rate",
+        "cache_efficiency",
+        "database_query_time",
+        "memory_footprint",
+        "cpu_utilization",
+        "network_bandwidth"
+      ],
+      "optimization_recommendations": {
+        "frontend": [
+          "Code splitting",
+          "Image optimization",
+          "Lazy loading",
+          "Bundle analysis",
+          "Critical CSS extraction"
+        ],
+        "backend": [
+          "Database indexing",
+          "Query optimization",
+          "Connection pooling",
+          "Caching strategies",
+          "Load balancing"
+        ],
+        "api": [
+          "Request batching",
+          "Response compression",
+        "Pagination optimization",
+          "CDN utilization",
+          "Edge computing"
+        ]
+      }
+    },
+    "blockchain_integration_tester": {
+      "name": "Blockchain Integration Tester",
+      "description": "Test and validate blockchain integrations",
+      "capabilities": [
+        "Smart contract interaction testing",
+        "Gas usage optimization analysis",
+        "Wallet connection testing (WalletConnect v1/v2)",
+        "Transaction simulation and validation",
+        "Event listening and processing",
+        "NFT minting flow testing",
+        "Token transfer validation",
+        "Cross-chain bridge testing"
+      ],
+      "blockchains_supported": [
+        "Ethereum",
+        "Base",
+        "Polygon",
+        "Arbitrum",
+        "Optimism",
+        "Solana",
+        "Avalanche"
+      ],
+      "testing_environments": ["mainnet", "testnet", "local", "forked"],
+      "tools_integrated": [
+        "Hardhat",
+        "Foundry",
+        "Tenderly",
+        "Alchemy",
+        "Infura",
+        "The Graph",
+        "Pinata",
+        "IPFS"
+      ]
+    },
+    "web_search": {
+      "name": "Web Search",
+      "description": "Search the web for updated documentation, solutions, and best practices",
+      "capabilities": [
+        "Search for API documentation updates",
+        "Find error solutions and troubleshooting guides",
+        "Discover new best practices and patterns",
+        "Check for security vulnerability updates",
+        "Find performance optimization techniques",
+        "Search for community discussions and forums",
+        "Find official GitHub repositories and issues",
+        "Discover recent blog posts and tutorials"
+      ],
+      "search_engines": ["Google", "GitHub", "Stack Overflow", "MDN", "npm", "official_docs"],
+      "filter_options": {
+        "time_range": ["past_hour", "past_day", "past_week", "past_month", "past_year"],
+        "source_type": ["official_docs", "tutorials", "forums", "code_repositories", "blog_posts"],
+        "relevance_score": 0.8
+      },
+      "validation_checks": [
+        "Check publication date",
+        "Verify source credibility",
+        "Cross-reference multiple sources",
+        "Check for official documentation",
+        "Verify with community consensus"
+      ]
+    },
+    "configuration_validator": {
+      "name": "Configuration Validator",
+      "description": "Validate configuration files and environment setups",
+      "capabilities": [
+        "Validate .env files for missing variables",
+        "Check package.json for dependency conflicts",
+        "Validate Dockerfile and docker-compose.yml",
+        "Check Next.js configuration (next.config.js)",
+        "Validate TypeScript configuration (tsconfig.json)",
+        "Check Tailwind configuration (tailwind.config.js)",
+        "Validate ESLint configuration (.eslintrc.js)",
+        "Check CI/CD configuration files"
+      ],
+      "config_file_types": [
+        ".env",
+        "package.json",
+        "tsconfig.json",
+        "next.config.js",
+        "tailwind.config.js",
+        ".eslintrc.js",
+        "Dockerfile",
+        "docker-compose.yml",
+        "github/workflows/*.yml",
+        "vercel.json"
+      ],
+      "validation_rules": {
+        "environment_variables": {
+          "required_variables": ["NEXT_PUBLIC_API_URL", "DATABASE_URL", "API_KEY"],
+          "sensitive_variables": ["API_KEY", "SECRET_KEY", "JWT_SECRET"],
+          "format_validation": ["URL", "EMAIL", "HEX_COLOR", "BOOLEAN"]
+        },
+        "dependencies": {
+          "version_conflicts": true,
+          "security_vulnerabilities": true,
+          "deprecated_packages": true,
+          "peer_dependencies": true
+        }
+      }
+    },
+    "documentation_generator": {
+      "name": "Documentation Generator",
+      "description": "Generate comprehensive documentation for integrations",
+      "capabilities": [
+        "Generate API documentation from OpenAPI/Swagger",
+        "Create README files with installation instructions",
+        "Generate code documentation with JSDoc/TypeDoc",
+        "Create architecture decision records (ADRs)",
+        "Generate troubleshooting guides",
+        "Create deployment documentation",
+        "Generate security compliance documentation",
+        "Create performance optimization guides"
+      ],
+      "output_formats": ["markdown", "html", "pdf", "confluence", "notion"],
+      "templates": {
+        "api_docs": {
+          "endpoints": true,
+          "parameters": true,
+          "responses": true,
+          "examples": true,
+          "authentication": true,
+          "error_codes": true
+        },
+        "readme": {
+          "project_title": true,
+          "description": true,
+          "installation": true,
+          "usage": true,
+          "api_reference": true,
+          "contributing": true,
+          "license": true
+        },
+        "troubleshooting": {
+          "problem_statement": true,
+          "symptoms": true,
+          "causes": true,
+          "solutions": true,
+          "prevention": true,
+          "references": true
+        }
+      }
+    },
+    "compliance_checker": {
+      "name": "Compliance Checker",
+      "description": "Check integrations for regulatory and standards compliance",
+      "capabilities": [
+        "GDPR compliance checking",
+        "CCPA compliance validation",
+        "HIPAA compliance for health data",
+        "PCI DSS compliance for payment processing",
+        "SOC 2 Type II compliance patterns",
+        "ISO 27001 security standards",
+        "Accessibility (WCAG) compliance",
+        "Performance standards compliance"
+      ],
+      "regulations": [
+        "GDPR",
+        "CCPA",
+        "HIPAA",
+        "PCI DSS",
+        "SOC 2",
+        "ISO 27001",
+        "WCAG 2.1",
+        "FERPA",
+        "COPPA"
+      ],
+      "check_categories": {
+        "data_protection": [
+          "data_encryption",
+          "access_controls",
+          "data_retention",
+          "data_deletion",
+          "data_portability"
+        ],
+        "security": [
+          "authentication",
+          "authorization",
+          "audit_logging",
+          "incident_response",
+          "vulnerability_management"
+        ],
+        "privacy": [
+          "privacy_policy",
+          "consent_management",
+          "data_minimization",
+          "purpose_limitation",
+          "transparency"
+        ]
+      }
+    }
+  },
+  "tool_chains": {
+    "api_integration_workflow": [
+      "configuration_validator",
+      "security_scanner",
+      "api_testing_suite",
+      "performance_analyzer",
+      "documentation_generator"
+    ],
+    "smart_contract_deployment": [
+      "blockchain_integration_tester",
+      "security_scanner",
+      "configuration_validator",
+      "documentation_generator"
+    ],
+    "production_readiness_check": [
+      "security_scanner",
+      "performance_analyzer",
+      "compliance_checker",
+      "configuration_validator",
+      "api_testing_suite"
+    ],
+    "troubleshooting_workflow": [
+      "web_search",
+      "api_testing_suite",
+      "configuration_validator",
+      "security_scanner",
+      "documentation_generator"
+    ]
+  },
+  "dependencies": {
+    "external_apis": [
+      {
+        "name": "Venice.ai API",
+        "version": "latest",
+        "authentication": "API_KEY",
+        "rate_limit": "per_token",
+        "documentation": "https://docs.venice.ai"
+      },
+      {
+        "name": "Coinbase onChainKit SDK",
+        "version": "latest",
+        "authentication": "WALLET_CONNECTION",
+        "rate_limit": "per_wallet",
+        "documentation": "https://docs.cloud.coinbase.com/onchainkit"
+      },
+      {
+        "name": "Farcaster SDK",
+        "version": "latest",
+        "authentication": "API_KEY",
+        "rate_limit": "per_key",
+        "documentation": "https://docs.farcaster.xyz"
+      },
+      {
+        "name": "Neynar API",
+        "version": "v2",
+        "authentication": "API_KEY",
+        "rate_limit": "tier_based",
+        "documentation": "https://docs.neynar.com"
+      }
+    ],
+    "internal_tools": [
+      {
+        "name": "Memory System",
+        "purpose": "Persistent storage for tool outputs",
+        "access": "read_write"
+      },
+      {
+        "name": "Context Manager",
+        "purpose": "Maintain conversation context across tools",
+        "access": "read_write"
+      },
+      {
+        "name": "Error Handler",
+        "purpose": "Standardized error handling across tools",
+        "access": "read_only"
+      }
+    ]
+  },
+  "execution_policies": {
+    "timeout_policy": "fail_after_300s",
+    "retry_policy": "exponential_backoff_max_3",
+    "concurrency_limit": 5,
+    "rate_limit": "10_per_minute_per_tool",
+    "cost_tracking": true,
+    "privacy_mode": "no_pii_storage"
+  }
+}
