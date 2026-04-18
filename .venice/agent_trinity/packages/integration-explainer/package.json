@@ -1,0 +1,18 @@
+{
+  "name": "@agent-trinity/integration-explainer",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src/index.ts --format esm,cjs --dts"
+  },
+  "dependencies": {
+    "@agent-trinity/shared": "workspace:*",
+    "zod": "^1^.22.0"
+  },
+  "devDependencies": {
+    "tsup": "^2^.0.0",
+    "tsx": "^3^.0.0",
+    "typescript": "^4^.0.0"
+  }
+}

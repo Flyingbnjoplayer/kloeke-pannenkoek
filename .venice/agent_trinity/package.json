@@ -1,0 +1,12 @@
+{
+  "name": "agent_trinity",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "test": "turbo test",
+    "agent3:dev": "cd packages/integration-explainer && npm run dev"
+  },
+  "packageManager": "pnpm@8.0.0"
+}
