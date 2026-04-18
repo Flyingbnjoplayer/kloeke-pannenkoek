@@ -1,0 +1,25 @@
+**Location:** `/scripts/`
+
+### **Directory Structure**
+
+scripts/
+├── database/
+│   ├── backup.js
+│   ├── cleanup-old-backups.js
+│   └── restore.js
+├── performance/
+│   ├── audit.js
+│   ├── regression-detector.js
+│   └── verify-budgets.js
+├── security/
+│   ├── scan-dependencies.js
+│   └── scan-code.js
+├── testing/
+│   ├── flakiness-detector.js
+│   └── generate-test-data.js
+├── dependencies/
+│   ├── update-dependencies.js
+│   └── check-outdated.js
+└── setup/
+    ├── environment.js
+    └── database.js
