@@ -8,6 +8,10 @@
     "test": "turbo test",
     "agent3:dev": "cd packages/integration-explainer && npm run dev",
     "agent3:test": "cd packages/integration-explainer && npm run test",
-    "agent3:explain": "cd packages/integration-explainer && npm run explain"
+    "agent3:explain": "cd packages/integration-explainer && npm run explain",
+    "agent1:dev": "cd packages/skillmarkdown-architect && npm run dev",
+    "agent1:test": "cd packages/skillmarkdown-architect && npm run test",
+    "agent2:dev": "cd packages/vscode-agent-generator && npm run dev",
+    "agent2:test": "cd packages/vscode-agent-generator && npm run test"
   }
 }
