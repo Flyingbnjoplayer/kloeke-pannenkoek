@@ -4,10 +4,15 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "node src/index.js",
+    "build": "tsup src/index.js --format esm,cjs --dts",
     "test": "node src/test.js",
     "explain": "node src/index.js"
   },
   "dependencies": {
     "zod": "^1^.22.0"
+  },
+  "devDependencies": {
+    "tsup": "^2^.0.0",
+    "typescript": "^3^.0.0"
   }
 }

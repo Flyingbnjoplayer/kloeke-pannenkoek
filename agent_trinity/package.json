@@ -1,9 +1,7 @@
 {
   "name": "agent_trinity",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
