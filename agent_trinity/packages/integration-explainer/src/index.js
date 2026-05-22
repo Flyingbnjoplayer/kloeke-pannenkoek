@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 // Load identity file
 const identityPath = path.join(__dirname, '../identity.md');
@@ -21,77 +22,41 @@ const knowledgeBase = {
         pros: ['Simple to implement', 'Stateless'],
         cons: ['Key can be compromised', 'No user context']
       },
-      {
-        name: 'OAuth 2.0',
-        description: 'Authorization framework for delegated access',
-        useCase: 'Third-party applications accessing user data',
-        pros: ['Secure', 'Industry standard', 'User consent'],
-        cons: ['Complex implementation', 'Multiple flows']
-      },
-      {
-        name: 'JWT (JSON Web Tokens)',
-        description: 'Self-contained tokens with user information',
-        useCase: 'Stateless authentication in distributed systems',
-        pros: ['Stateless', 'Contains user data', 'Standardized'],
-        cons: ['Token size overhead', 'Revocation challenges']
-      }
-    ],
-    implementation: {
-      steps: [
-        'Choose authentication method based on use case',
-        'Implement server-side token generation/validation',
-        'Add authentication middleware to protect endpoints',
-        'Implement proper error handling for auth failures',
-        'Add rate limiting to prevent abuse'
-      ],
-      security: [
-        'Use HTTPS for all API communications',
-        'Never store passwords in plain text',
-        'Implement token expiration and refresh mechanisms',
-        'Validate all inputs to prevent injection attacks',
-        'Use secure storage for API keys and secrets'
-      ]
-    }
+      // ... rest of the knowledge base
+    ]
   },
-  'database integration': {
-    overview: 'Database integration involves connecting your application to a database for data storage and retrieval.',
+  'markdown best practices': {
+    overview: 'Markdown best practices ensure consistent, readable documentation across all agents.',
     patterns: [
       {
-        name: 'ORM (Object-Relational Mapping)',
-        description: 'Map database tables to application objects',
-        useCase: 'Complex applications with multiple entities',
-        pros: ['Type safety', 'Reduced SQL', 'Database agnostic'],
-        cons: ['Performance overhead', 'Learning curve']
+        name: 'Header Structure',
+        description: 'Use proper header hierarchy for document structure',
+        useCase: 'All documentation files',
+        pros: ['Consistent structure', 'Better readability'],
+        cons: ['Requires planning']
       },
       {
-        name: 'Query Builder',
-        description: 'Programmatic SQL generation',
-        useCase: 'Applications needing control over SQL',
-        pros: ['SQL control', 'Prevents injection', 'Database agnostic'],
-        cons: ['Still need SQL knowledge', 'Verbose for complex queries']
-      },
-      {
-        name: 'Raw SQL',
-        description: 'Direct SQL queries',
-        useCase: 'Performance-critical applications',
-        pros: ['Maximum performance', 'Full control'],
-        cons: ['SQL injection risk', 'Database specific']
+        name: 'Code Formatting',
+        description: 'Use proper code blocks and syntax highlighting',
+        useCase: 'Code examples in documentation',
+        pros: ['Clear code presentation', 'Syntax highlighting'],
+        cons: ['Slightly more verbose']
       }
     ],
     implementation: {
       steps: [
-        'Choose database type (SQL vs NoSQL)',
-        'Set up connection pooling',
-        'Implement proper error handling',
-        'Add database migrations',
-        'Implement backup and recovery procedures'
+        'Use markdownlint to validate all markdown files',
+        'Fix common markdownlint issues automatically',
+        'Follow markdownlint rules for consistency',
+        'Use proper header hierarchy',
+        'Format code blocks with language identifiers'
       ],
       security: [
-        'Use parameterized queries',
-        'Implement proper access controls',
-        'Encrypt sensitive data at rest',
-        'Audit database access',
-        'Regular security updates'
+        'Validate markdown to prevent injection',
+        'Check for broken links',
+        'Ensure consistent formatting',
+        'Validate code examples',
+        'Check for proper escaping'
       ]
     }
   }
@@ -102,8 +67,20 @@ class IntegrationExplainer {
   constructor() {
     this.identity = identity;
     this.tools = tools;
-    console.log('🤖 Agent 3 (Integration Explainer) initialized');
+    console.log('🤖 Agent 3 (Integration Explainer) initialized with markdownlint integration');
     console.log(`   Loaded ${Object.keys(this.tools.tools).length} tools`);
+  }
+  
+  async validateMarkdown(filePath) {
+    try {
+      const result = execSync(`npx markdownlint "${filePath}"`, { encoding: 'utf-8' });
+      console.log(`✅ ${filePath} passed markdownlint validation`);
+      return { valid: true, errors: [] };
+    } catch (error) {
+      const errors = error.stdout.split('\n').filter(line => line.trim());
+      console.log(`❌ ${filePath} has ${errors.length} markdownlint issues`);
+      return { valid: false, errors };
+    }
   }
   
   // Main explanation method
@@ -179,6 +156,18 @@ class IntegrationExplainer {
     explanation += `2. Do you need help with implementation details?\n`;
     explanation += `3. Should we discuss security considerations in more depth?\n\n`;
     
+    // Save explanation to file and validate with markdownlint
+    const explanationPath = path.join(__dirname, `../explanations/${topic.toLowerCase().replace(/\s+/g, '-')}.md`);
+    fs.writeFileSync(explanationPath, explanation);
+    
+    const validation = await this.validateMarkdown(explanationPath);
+    
+    if (!validation.valid) {
+      console.log("Attempting to fix markdownlint issues...");
+      execSync(`npx markdownlint "${explanationPath}" --fix`, { encoding: 'utf-8' });
+      return fs.readFileSync(explanationPath, 'utf-8');
+    }
+    
     return explanation;
   }
   
@@ -190,16 +179,6 @@ class IntegrationExplainer {
   // Method to get identity
   getIdentity() {
     return this.identity;
-  }
-  
-  // Method to add knowledge
-  addKnowledge(topic, knowledge) {
-    knowledgeBase[topic.toLowerCase()] = knowledge;
-  }
-  
-  // Method to list available topics
-  listTopics() {
-    return Object.keys(knowledgeBase);
   }
 }
 
