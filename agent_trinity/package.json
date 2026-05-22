@@ -1,24 +1,25 @@
 {
-  "name": "agent_trinity",
   "private": true,
+  "name": "agent_trinity",
+  "devDependencies": {
+    "markdownlint": ".40.0",
+    "markdownlint-cli": ".40.0"
+  },
   "workspaces": [
     "packages/*"
   ],
-  "devDependencies": {
-    "markdownlint": ".40.0"
-  },
   "scripts": {
-    "agent3:explain": "cd packages/integration-explainer && npm run explain",
-    "dev": "turbo dev",
-    "agent3:dev": "cd packages/integration-explainer && npm run dev",
+    "agent2:test": "cd packages/vscode-agent-generator && npm run test",
     "test": "turbo test",
+    "lint:md": "markdownlint '**/*.md'",
+    "build": "turbo build",
     "agent2:dev": "cd packages/vscode-agent-generator && npm run dev",
     "lint:md:fix": "markdownlint '**/*.md' --fix",
+    "agent3:dev": "cd packages/integration-explainer && npm run dev",
     "agent3:test": "cd packages/integration-explainer && npm run test",
-    "build": "turbo build",
-    "agent2:test": "cd packages/vscode-agent-generator && npm run test",
+    "agent1:test": "cd packages/skillmarkdown-architect && npm run test",
     "agent1:dev": "cd packages/skillmarkdown-architect && npm run dev",
-    "lint:md": "markdownlint '**/*.md'",
-    "agent1:test": "cd packages/skillmarkdown-architect && npm run test"
+    "agent3:explain": "cd packages/integration-explainer && npm run explain",
+    "dev": "turbo dev"
   }
 }
